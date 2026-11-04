@@ -19,24 +19,23 @@ log = logging.getLogger("khilona.prediction")
 
 # Resolve model directory:
 # 1. MODEL_DIR environment variable if specified
-# 2. Sibling model/ directory relative to backend (standard repository root)
-# 3. model/ directory in current working directory
-# 4. model/ directory inside backend/
+# 2. Local backend/model directory (self-contained within backend)
+# 3. Sibling model/ directory relative to backend (standard repository root)
+# 4. Working directory model/
 _env_model_dir = os.getenv("MODEL_DIR", "").strip()
 if _env_model_dir:
     MODEL_DIR = Path(_env_model_dir).resolve()
 else:
-    _repo_model_dir = Path(__file__).resolve().parent.parent / "model"
-    _cwd_model_dir = Path.cwd() / "model"
-    _local_model_dir = Path(__file__).resolve().parent / "model"
-    if _repo_model_dir.exists():
-        MODEL_DIR = _repo_model_dir
-    elif _cwd_model_dir.exists():
-        MODEL_DIR = _cwd_model_dir
-    elif _local_model_dir.exists():
-        MODEL_DIR = _local_model_dir
-    else:
-        MODEL_DIR = _repo_model_dir
+    candidates = [
+        Path(__file__).resolve().parent / "model",          # backend/model
+        Path(__file__).resolve().parent.parent / "model",   # <repo>/model
+        Path.cwd() / "model",                               # cwd/model
+    ]
+    # Pick the first candidate directory that contains the model files
+    MODEL_DIR = next(
+        (c for c in candidates if (c / "khilona_model.keras").exists() or (c / "class_names.json").exists()),
+        candidates[0]
+    )
 
 MODEL_PATH = MODEL_DIR / "khilona_model.keras"
 CLASS_NAMES_PATH = MODEL_DIR / "class_names.json"

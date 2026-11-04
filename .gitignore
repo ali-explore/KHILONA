@@ -35,5 +35,8 @@ Thumbs.db
 # Ignore generic weights and temporary .h5 files, but track the production model
 *.h5
 model/*.h5
+backend/model/*.h5
 model/*.keras
+backend/model/*.keras
 !model/khilona_model.keras
+!backend/model/khilona_model.keras

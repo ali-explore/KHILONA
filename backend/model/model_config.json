@@ -1,0 +1,8 @@
+{
+  "image_size": [
+    128,
+    128
+  ],
+  "color_mode": "RGB",
+  "normalization": "rescale_255"
+}

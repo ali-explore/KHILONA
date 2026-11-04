@@ -25,9 +25,12 @@ export class ApiError extends Error {
 }
 
 // Compute the base URL for API requests.
-// When VITE_API_BASE_URL is set (e.g. "https://khilona-backend.onrender.com"), requests go to that backend.
+// When VITE_API_BASE_URL is set (e.g. "https://khilona-backend.onrender.com" or "khilona-backend.up.railway.app"), requests go to that backend.
 // When it is not set, fallback to "/api" which preserves the existing Vite local proxy behavior.
-const rawBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim().replace(/\/+$/, "");
+let rawBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim().replace(/\/+$/, "");
+if (rawBaseUrl && !rawBaseUrl.startsWith("http://") && !rawBaseUrl.startsWith("https://") && !rawBaseUrl.startsWith("/")) {
+  rawBaseUrl = `https://${rawBaseUrl}`;
+}
 const API_BASE_URL = rawBaseUrl
   ? (rawBaseUrl.endsWith("/api") ? rawBaseUrl : `${rawBaseUrl}/api`)
   : "/api";
