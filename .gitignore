@@ -1,0 +1,39 @@
+# Dependencies & Environments
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Datasets and training data (do not commit raw images or dataset archives)
+dataset/
+data/
+train/
+validation/
+test/
+*.zip
+*.tar.gz
+*.7z
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large model files / weights:
+# Ignore generic weights and temporary .h5 files, but track the production model
+*.h5
+model/*.h5
+model/*.keras
+!model/khilona_model.keras

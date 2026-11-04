@@ -1,0 +1,25 @@
+@import "@fontsource-variable/inter";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body { @apply bg-app text-ink font-sans antialiased; }
+  :focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }
+}
+@layer components {
+  .eyebrow { @apply text-[10px] font-medium uppercase tracking-[0.12em] text-brand; }
+  .grid-surface {
+    background-image:
+      linear-gradient(rgba(59,130,246,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+@keyframes belt { from { background-position: 0 0; } to { background-position: 28px 0; } }
+.belt-moving { animation: belt 1.2s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .belt-moving { animation: none; }
+  * { transition-duration: .01ms !important; }
+}
